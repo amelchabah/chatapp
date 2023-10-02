@@ -1,0 +1,75 @@
+.fixed {
+	position: fixed;
+	display: flex;
+	bottom: 25px;
+    right: 15px;
+	// flex-direction: column;
+	flex-direction: row;
+	
+	gap: 1rem;
+	align-items: flex-end;
+	z-index: 100000000;
+
+}
+
+.popup {
+	background-color: var(--background-rgb);
+	// background-color: var(--second-background-rgb);
+	border-radius: 0.5rem;
+	padding: 5px 10px;
+	transition: all 0.3s ease-in-out;
+	animation: slideIn 1s ease-in-out;
+	text-align: end;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	border: 1px solid var(--second-background-rgb);
+}
+
+.popup h5{
+	color: var(--fourth-background-rgb);
+}
+
+.popup.inactive {
+	transform: translateX(calc(100% + 100px));
+}
+
+.popup.hide {
+	display: none;
+}
+
+.toggle {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	// aspect-ratio: 1/1;
+	width: auto;
+	margin: 0;
+	background-color: transparent;
+	border: none;
+	margin-right: 5px;
+}
+
+.toggle	svg {
+	display: block;
+	position: relative;
+	fill: var(--fourth-background-rgb) !important;
+}
+	
+
+@keyframes slideIn {
+	0% {
+		transform: translateX(120%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+}
+
+
+@media screen and (max-width: 768px) {
+	.popup {
+		display: none;
+	}
+}

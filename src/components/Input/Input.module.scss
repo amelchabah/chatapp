@@ -1,0 +1,87 @@
+.input {
+    margin-top: auto;
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: 1px solid var(--fifth-background-rgb);
+    display: flex;
+    flex-direction: column;
+}
+
+.input .inputtext {
+    border: 0;
+    width: 100%;
+    outline: none;
+}
+
+
+.input label {
+    display: flex;
+    margin: 0.2rem 0.6rem 0.2rem 0.6rem;
+    cursor: pointer;
+}
+
+.input label svg {
+    fill: grey;
+}
+
+.input button {
+    margin-left: auto;
+    padding: 0px 10px;
+    font-weight: 600;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: gray;
+}
+
+.input button:hover,
+.input label svg:hover {
+    color: var(--foreground-rgb);
+    fill: var(--foreground-rgb);
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Style for the image preview */
+.imagePreview {
+    position: relative;
+
+}
+
+.imagePreview img {
+    height: 150px;
+    margin-bottom: 0.5rem;
+}
+
+.delete {
+    position: absolute;
+    top: 0;
+    font-size: 1rem;
+    font-weight: bold !important;
+    fill: rgb(247, 53, 53) !important;
+}
+
+.delete:hover {
+    fill: red !important;
+}
+
+.typingIndicator {
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 0 1rem 0.8rem;
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+    .input {
+        width: calc(100% - 40px);
+        margin: 0;
+    }    
+}

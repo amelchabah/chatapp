@@ -1,0 +1,78 @@
+.sidebar {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100vh;
+    width: 200px;
+    padding: 20px 25px;
+    border-right: 1px solid var(--second-background-rgb);
+    //h5
+    & h5 {
+        margin-bottom: 0.5rem;
+    }
+    //nav ul
+    & nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+}
+
+.sidebar button {
+    margin-top: auto;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid rgb(247, 53, 53);
+    color: rgb(247, 53, 53);
+    font-weight: 500;
+    background-color: transparent;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    // transition: all 0.05s ease-in-out;
+    cursor: pointer;
+}
+
+.sidebar button svg {
+    fill: rgb(247, 53, 53);
+}
+
+.sidebar button:hover {
+    // background-color: rgb(247, 53, 53);
+    // color: white;
+    box-shadow: inset 0px 0px 0px 1px rgb(247, 53, 53);
+    // transition: all 0.05s ease-in-out;
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+        /* Styles pour la sidebar à l'écran étroit */
+        // width: 70px;
+        /* Réduire la largeur */
+        padding: 10px;
+    }
+
+    .sidebar ul {
+        display: none;
+        /* Masquer la liste de noms d'utilisateur */
+    }
+
+    .sidebar button {
+        /* Styles pour le bouton Logout */
+        justify-content: center;
+        /* Centrer l'icône */
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .sidebar button svg {
+        /* Styles pour l'icône du bouton Logout */
+        width: 15px;
+        /* Ajuster la taille de l'icône */
+        height: 15px;
+    }
+}
