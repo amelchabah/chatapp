@@ -21,7 +21,9 @@ export default function App({ Component, pageProps }) {
                 <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
                 <link rel="manifest" href="favicon/site.webmanifest" />
-
+                
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="mobile-web-app-capable" content="yes" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="description" content="A chat app built with Socket.io, Next.js, and React." />
                 <meta name="keywords" content="socket.io, next.js, react, chat, app" />
