@@ -39,7 +39,6 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
 
     const resetNotification = (user) => {
         const _users = [...users];
-
         const index = _users.findIndex((_user) => _user.userID === user.userID);
         _users[index].hasNewMessages = false;
         setUsers(_users);
@@ -57,8 +56,8 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
             {/* <div className={`${styles.user}`} onClick={handleGeneralClick}> */}
             <div
                 className={`${styles.user} ${selectedUser ? "" : styles.user__active}`} // Ajoutez la classe user__active si selectedUser est null
-                onClick={handleGeneralClick}
-            >
+                onClick={() => { handleUserClick(user); resetNotification(user); }}
+                >
                 <div className={styles.avatar}>
                     <img src={generateAvatar("General")} alt="your avatar" />
                 </div>
@@ -88,7 +87,6 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
                                         {user.hasNewMessages ? (<div className={styles.newMessage}></div>) : null}
                                     </div>
                                 ) : null;
-
                             }
                             )
                     )}
