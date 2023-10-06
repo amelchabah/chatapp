@@ -1,32 +1,3 @@
-// import styles from '../UserList/UserList.module.scss';
-
-// const UserList = ({ users, selectedUser, setSelectedUser }) => {
-//     return (
-//         <div className={styles.userlist}>
-//             <h2>Users</h2>
-//             <nav>
-//                 <h5>Online - {users.length}</h5>
-//                 {users.map((user, key) => {
-//                     return user.connected ?
-//                         <div
-//                             key={user.userID}
-//                             className={`${styles.user} ${selectedUser?.userID === user.userID ? styles.user__active : ""}`}
-//                             onClick={() =>
-//                                 setSelectedUser(user)}>
-//                             {user.username}
-//                         </div>
-//                         : null;
-//                 }
-//                 )}
-//             </nav>
-//         </div>
-//     )
-// };
-
-
-// export default UserList;
-
-
 import React, { useState } from "react";
 import styles from "./UserList.module.scss";
 import { socket } from "@/utils/socket";
@@ -34,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 
-const UserList = ({ users, selectedUser, setSelectedUser, messages, showGeneralMessages, setShowGeneralMessages }) => {
+const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, showGeneralMessages, setShowGeneralMessages }) => {
 
     const { push } = useRouter();
     const onlineUsers = users.filter((user) => user.connected);
@@ -65,6 +36,15 @@ const UserList = ({ users, selectedUser, setSelectedUser, messages, showGeneralM
         socket.disconnect();
         push("/login");
     };
+
+    const resetNotification = (user) => {
+    const _users = [...users];
+    
+    const index = _users.findIndex((_user) => _user.userID === user.userID);
+        _users[index].hasNewMessages = false;
+    setUsers(_users);
+    };
+
 
     return (
         <div className={styles.userlist}>
@@ -104,7 +84,8 @@ const UserList = ({ users, selectedUser, setSelectedUser, messages, showGeneralM
                                         <div className={styles.avatar}>
                                             <img src={generateAvatar(user.username)} alt="your avatar" />
                                         </div>
-                                        <p>{user.username}</p>
+                                        {user.hasNewMessages ? (<p className={styles.bold}>{user.username}</p>) : (<p>{user.username}</p>)}
+                                        {user.hasNewMessages ? (<div className={styles.newMessage}></div>) : null}
                                     </div>
                                 ) : null;
 
