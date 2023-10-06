@@ -93,7 +93,7 @@ const Login = () => {
                                 placeholder="Username"
                                 onKeyDown={onKeyDown}
                             />
-                            <span className="arrow">→</span>
+                            <span className="arrow" onClick={onKeyDown}>→</span>
                         </div>
                     </>}
                     {/* ou */}
