@@ -102,8 +102,8 @@ const Home = () => {
 
     const onConnectionError = (error) => {
         console.log("connection error", error);
-        localStorage.clear('username');
-        localStorage.clear('sessionID');
+        localStorage.removeItem('username');
+        localStorage.removeItem('sessionID');
         localStorage.setItem('error', 100);
         // ca c cote client uniquement ca n'a rien a voir avec le serveur (100)
         push("/login");
