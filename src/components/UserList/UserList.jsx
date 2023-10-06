@@ -79,7 +79,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
                                     <div
                                         key={user.userID}
                                         className={`${styles.user} ${selectedUser?.userID === user.userID ? styles.user__active : ""}`}
-                                        onClick={() => handleUserClick(user)}
+                                        onClick={() => { handleUserClick(user); resetNotification(user); }}
                                     >
                                         <div className={styles.avatar}>
                                             <img src={generateAvatar(user.username)} alt="your avatar" />
