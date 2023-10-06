@@ -154,9 +154,9 @@ const Home = () => {
             date: new Date(),
         });
 
-        // if (userMessaging.userID !== selectedUser?.userID) {
-        //     userMessaging.hasNewMessages = true;
-        // }
+        if (userMessaging.userID !== selectedUser?.userID) {
+            userMessaging.hasNewMessages = true;
+        }
 
         const _users = [...users];
         _users[userMessagingIndex] = userMessaging;
