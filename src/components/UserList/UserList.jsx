@@ -38,11 +38,11 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
     };
 
     const resetNotification = (user) => {
-    const _users = [...users];
-    
-    const index = _users.findIndex((_user) => _user.userID === user.userID);
+        const _users = [...users];
+
+        const index = _users.findIndex((_user) => _user.userID === user.userID);
         _users[index].hasNewMessages = false;
-    setUsers(_users);
+        setUsers(_users);
     };
 
 
