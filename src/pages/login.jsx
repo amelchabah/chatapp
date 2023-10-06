@@ -30,7 +30,7 @@ const Login = () => {
     useEffect(() => {
         const checkServerAvailability = async () => {
             try {
-                const response = await fetch("http://localhost:1234"); // Assurez-vous de remplacer l'URL par celle de votre serveur
+                const response = await fetch("https://mmidev.alwaysdata.net/"); // Assurez-vous de remplacer l'URL par celle de votre serveur
 
                 if (response.status === 200) {
                     // Le serveur est en ligne, supprimez l'erreur du localStorage
