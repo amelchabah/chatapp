@@ -23,6 +23,20 @@
         margin: 0.5rem 0 0 1rem;
         color: var(--foreground-rgb);
     }
+        .bold {
+        font-weight: 600;
+    }
+    .newMessage {
+        font-size: 0.8rem;
+        background-color: var(--notification);
+        margin-left: auto;
+        border-radius: 50%;
+        margin-right: 5px;
+        border: solid 1.8px var(--background-rgb);
+        height: 12px;
+        width: 12px;
+    }
+
 
     nav {
         display: flex;
@@ -140,6 +154,17 @@
             margin-top: 0.5rem;
             margin-left: 0;
         }
+
+        
+        .user {
+            position: relative;
+        }
+        .newMessage {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
 
         h3 span,
         p,
