@@ -291,6 +291,7 @@ const Home = () => {
         <>
             <UserList
                 users={users}
+                setUsers={setUsers}
                 selectedUser={selectedUser}
                 setSelectedUser={setSelectedUser}
                 messages={messages}
