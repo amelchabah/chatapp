@@ -56,7 +56,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
             {/* <div className={`${styles.user}`} onClick={handleGeneralClick}> */}
             <div
                 className={`${styles.user} ${selectedUser ? "" : styles.user__active}`} // Ajoutez la classe user__active si selectedUser est null
-                onClick={() => { handleUserClick(user); resetNotification(user); }}
+                onClick={handleGeneralClick}
                 >
                 <div className={styles.avatar}>
                     <img src={generateAvatar("General")} alt="your avatar" />
