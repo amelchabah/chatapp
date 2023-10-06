@@ -48,9 +48,9 @@ const Home = () => {
         // console.log("session received", sessionID, userID);
         socket.auth = { sessionID };
         localStorage.setItem("sessionID", sessionID);
-
         // save l'ID du user
         socket.userID = userID;
+        localStorage.clear('error');
     }
 
     const formatDate = (timestamp) => {
