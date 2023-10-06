@@ -23,9 +23,11 @@
         margin: 0.5rem 0 0 1rem;
         color: var(--foreground-rgb);
     }
-        .bold {
+    
+    .bold {
         font-weight: 600;
     }
+    
     .newMessage {
         font-size: 0.8rem;
         background-color: var(--notification);
@@ -137,6 +139,7 @@
 
         .user {
             padding: 10px;
+            position: relative;
         }
 
         nav {
@@ -154,17 +157,12 @@
             margin-top: 0.5rem;
             margin-left: 0;
         }
-
         
-        .user {
-            position: relative;
-        }
         .newMessage {
             position: absolute;
             bottom: 0;
             right: 0;
         }
-
 
         h3 span,
         p,
