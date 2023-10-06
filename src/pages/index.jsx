@@ -50,7 +50,7 @@ const Home = () => {
         localStorage.setItem("sessionID", sessionID);
         // save l'ID du user
         socket.userID = userID;
-        localStorage.clear('error');
+        localStorage.removeItem('error');
     }
 
     const formatDate = (timestamp) => {

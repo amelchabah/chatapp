@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 // export pour l'importer dans d'autres fichiers
 // mettre le lien d'un serveur (socket.io?)
 // export const socket = io("https://iut-chat.karljustiniano.fr:1234/", {
-// export const socket = io("http://localhost:1234", {
+// export const socket = io("http://localhost:8100", {
 export const socket = io("https://mmidev.alwaysdata.net/", {
     autoConnect: false,
 });
