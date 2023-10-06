@@ -24,10 +24,6 @@ const Login = () => {
             localStorage.setItem("username", inputRef.current.value);
             inputRef.current.value = "";
             push("/");
-        } else {
-            localStorage.setItem("username", inputRef.current.value);
-            inputRef.current.value = "";
-            push("/");
         }
     }
 
