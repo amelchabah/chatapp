@@ -1,3 +1,7 @@
+<a href="https://chat-amelchabah.vercel.app/">chat-amelchabah.vercel.app</a>, made with Next.js & Socket.io
+
+all rights reserved © amelchabah
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
