@@ -82,60 +82,54 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
 
 
     const onSend = (e) => {
-        const currentDate = new Date()
         e.preventDefault();
-        if (selectedUser) {
-            const _selectedUser = { ...selectedUser };
-            e.preventDefault();
+        const currentDate = new Date();
 
-            socket.emit("private message", {
-                content: inputRef.current.value,
-                to: selectedUser.userID,
-                date: currentDate
-            });
+        // Récupérez la valeur du champ de texte
+        const messageContent = inputRef.current.value.trim();
 
-            // do this because react doesnt re-render otherwise
-            if (fileInputRef.current.files[0]) {
-                onPrivateImageUpload(e);
-                // _selectedUser.messages.push({
-                //     content: onPrivateImageUpload(e),
-                //     fileName: fileInputRef.current.files[0] ? fileInputRef.current.files[0].name : null,
-                //     // fromSelf: true,
-                //     from: socket.userID,
-                //     username: localStorage.getItem("username"),
-                //     date: currentDate,
-                //     isImage: true
-                // });
-            } else {
-                _selectedUser.messages.push({
-                    content: inputRef.current.value,
-                    // fileName: null,
-                    // fromSelf: true,
-                    from: socket.userID,
-                    username: localStorage.getItem("username"),
-                    date: currentDate,
-                    // isImage: false
+        // Récupérez le fichier sélectionné
+        const selectedFile = fileInputRef.current.files[0];
+
+        // Vérifiez à la fois le champ de texte et le champ de fichier 
+        if (messageContent !== "" || (selectedFile && selectedFile.size > 0)) {
+
+            if (selectedUser) {
+                const _selectedUser = { ...selectedUser };
+                socket.emit("private message", {
+                    content: messageContent,
+                    to: selectedUser.userID,
+                    date: currentDate
                 });
 
-                // change the reference to trigger a render
-                setSelectedUser(_selectedUser);
-                e.preventDefault();
-            }
-        } else {
-            socket.emit('message', {
-                content: inputRef.current.value,
-                date: currentDate
-            })
-            if (fileInputRef.current.files[0]) {
-                onImageUpload(e);
-            };
-            setSelectedUser(null);
-        }
+                if (fileInputRef.current.files[0]) {
+                    onPrivateImageUpload(e);
+                } else if (messageContent !== "") {
+                    _selectedUser.messages.push({
+                        content: messageContent,
+                        from: socket.userID,
+                        username: localStorage.getItem("username"),
+                        date: currentDate,
+                    });
+                    setSelectedUser(_selectedUser);
+                }
+            } else {
+                socket.emit('message', {
+                    content: messageContent,
+                    date: currentDate
+                });
 
+                if (fileInputRef.current.files[0]) {
+                    onImageUpload(e);
+                }
+            }
+        }
+        // Réinitialisez le champ de fichier et l'aperçu de l'image
         inputRef.current.value = "";
-        fileInputRef.current.value = ""; // Réinitialisez le champ de fichier
-        setImagePreview(null); // Reset the image preview
+        fileInputRef.current.value = "";
+        setImagePreview(null);
     };
+
 
     const handleTyping = () => {
         const username = localStorage.getItem("username");
@@ -221,11 +215,11 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                         ref={inputRef}
                         className={styles.inputtext}
                         type="text"
-                        placeholder="Try /chef..."
+                        placeholder="Try /chef or paste image URL..."
                         onInput={handleTyping}
                     />
 
-                    <button type="submit" title="Send">Send</button>
+                    <button className={styles.submit} type="submit" title="Send">Send</button>
 
                 </div>
 

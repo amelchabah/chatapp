@@ -31,6 +31,10 @@
 .login_frame img {
     border-radius: 15px;
     filter: invert(1) contrast(1.5);
+    -webkit-filter: invert(1) contrast(1.5);
+    -moz-filter: invert(1) contrast(1.5);
+    -o-filter: invert(1) contrast(1.5);
+    -ms-filter: invert(1) contrast(1.5);
 }
 
 @media screen and (max-width:768px) {

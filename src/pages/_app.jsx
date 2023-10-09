@@ -40,9 +40,6 @@ export default function App({ Component, pageProps }) {
                 <meta name="twitter:description" content="A chat app built with Socket.io, Next.js, and React." />
             </Head>
             <Theme />
-            {/* {!isLoginPage && <Sidebar />} */}
-
-            {/* {!isLoginPage && <Userbar />} */}
             <main className={isLoginPage ? 'login' : ''}>
                 <Component {...pageProps} />
             </main>

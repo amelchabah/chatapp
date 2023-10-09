@@ -42,40 +42,40 @@
     height: 100%;
 }
 
-.messages img {
-    max-height: 200px;
-    border-radius: 10px;
-    margin-top: 10px;
-}
+// .messages img {
+//     max-height: 200px;
+//     border-radius: 10px;
+//     margin-top: 10px;
+// }
 
-.message {
-    margin: 5px;
-    border-radius: 15px;
-    padding: 10px 15px;
-    word-break: break-word;
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-}
+// .message {
+//     margin: 5px;
+//     border-radius: 15px;
+//     padding: 10px 15px;
+//     word-break: break-word;
+//     width: fit-content;
+//     display: flex;
+//     flex-direction: column;
+// }
 
-.message small {
-    opacity: 0;
-}
+// .message small {
+//     opacity: 0;
+// }
 
-.message:hover small {
-    opacity: 0.5;
-}
+// .message:hover small {
+//     opacity: 0.5;
+// }
 
 
-.ownmessage {
-    align-self: flex-end;
-    background-color: var(--third-background-rgb);
-}
+// .ownmessage {
+//     align-self: flex-end;
+//     background-color: var(--third-background-rgb);
+// }
 
-.othermessage {
-    align-self: flex-start;
-    background-color: var(--second-background-rgb);
-}
+// .othermessage {
+//     align-self: flex-start;
+//     background-color: var(--second-background-rgb);
+// }
 
 .nomessage {
     margin-top: auto;

@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { socket } from "@/utils/socket";
 import { useRouter } from "next/router";
 import Input from "@/components/Input/Input";
-import Commands from "@/components/Commands/Commands"
 import { useState } from "react";
 import { useRef } from "react";
 import Notification from "@/components/Notification/Notification";
@@ -10,22 +9,18 @@ import { format, formatDistance } from "date-fns";
 import UserList from "@/components/UserList/UserList";
 import Userbar from "@/components/Userbar/Userbar";
 import styles from "@/styles/index.module.scss";
-// import MessageGeneral from "@/components/MessageGeneral/MessageGeneral"
-// import MessagePrivate from "@/components/MessagePrivate/MessagePrivate"
-
+import Message from "@/components/Message/Message"; // Importez le composant Message
 
 const Home = () => {
     const [messages, setMessages] = useState([]);
-    // const [generalMessages, setGeneralMessages] = useState([]); // New state for General messages
     const [error, setError] = useState();
     // users inscrits (connectés ou non)
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState();
     const [showGeneralMessages, setShowGeneralMessages] = useState(true);
-
-
     // const [errors, setErrors] = useState([]);    
     // faire tableau quand y aura plusieurs erreurs, comme pour message
+
     const { push } = useRouter();
     const listRef = useRef(null);
 
@@ -53,30 +48,15 @@ const Home = () => {
         localStorage.removeItem('error');
     }
 
-    const formatDate = (timestamp) => {
-        // Utilisez la fonction format pour formater la date et l'heure
-        // return format(new Date(timestamp), 'dd/MM');
-        // return format(new Date(timestamp), "MM/dd/yyyy 'at' h:mm a");
-        // if date is today, display "Today"
-
-        if (format(new Date(timestamp), "MM/dd/yyyy") === format(new Date(), "MM/dd/yyyy")) {
-            return format(new Date(timestamp), "'Today at' h:mm a");
-        } else {
-            return format(new Date(timestamp), "MM/dd/yyyy 'at' h:mm a");
-        }
-    };
-
-
     const onMessage = (message) => {
         console.log("message received", message);
         setMessages((messages) => [...messages, message]);
     };
 
     const getMessagesAtInit = (messages) => {
-        console.log("messages received", messages);
+        // console.log("messages received", messages);
         setMessages(messages);
     }
-    // users ou _users c pareil
 
     const getUsersAtInit = (_users) => {
         console.log("users received", _users);
@@ -98,7 +78,6 @@ const Home = () => {
         console.log(filteredArray);
         setUsers(filteredArray);
     };
-
 
     const onConnectionError = (error) => {
         console.log("connection error", error);
@@ -189,9 +168,9 @@ const Home = () => {
             isImage: true,
         });
 
-        // if (userMessaging.userID !== selectedUser?.userID) {
-        //     userMessaging.hasNewMessages = true;
-        // }
+        if (userMessaging.userID !== selectedUser?.userID) {
+            userMessaging.hasNewMessages = true;
+        }
 
         const _users = [...users];
         _users[userMessagingIndex] = userMessaging;
@@ -226,7 +205,6 @@ const Home = () => {
         } else {
             push("/login");
         }
-
 
         socket.on('error', onError);
         socket.on('session', onSession);
@@ -282,10 +260,7 @@ const Home = () => {
         if (listRef.current) {
             listRef.current.scrollTop = listRef.current.scrollHeight;
         }
-    }, [messages, selectedUser, users, error]);
-
-
-
+    }, [messages, selectedUser, users, error, listRef.current, messages.isImage]);
 
     return (
         <>
@@ -299,6 +274,8 @@ const Home = () => {
                 setShowGeneralMessages={setShowGeneralMessages}
             />
             <div className={styles.chat}>
+
+                {/* destinataire */}
                 <h2 className={styles.title}>
                     {selectedUser ? (
                         <>
@@ -323,8 +300,7 @@ const Home = () => {
                     )}
                 </h2>
 
-
-
+                {/* messages */}
                 <div className={styles.messages} ref={listRef}>
                     {messages.length === 0 && !selectedUser ? (
                         <div className={styles.nomessage}>
@@ -339,99 +315,23 @@ const Home = () => {
                                     <p>Don't be shy, start the conversation!</p>
                                 </div>
                             )}
-
                             {selectedUser
-                                ? selectedUser.messages.map((_message, key) => {
-                                    if (_message.content.match(/^(http|https):\/\/.*\.(jpeg|jpg|gif|png|webp|svg)$/) != null) {
-                                        return (
-                                            <div key={key}
-                                                className={`${styles.message} ${_message.username === username ? styles.ownmessage : styles.othermessage}`}>
-
-                                                <div className="inline">
-                                                    <h6>{_message.username}</h6>
-                                                    <small>{formatDate(_message.date)}</small>
-                                                </div>
-                                                <div>
-                                                    <img src={_message.content} alt={`Image de ${_message.username}`} />
-                                                </div>
-                                            </div>
-                                        )
-
-                                    }
-                                    else if (!_message.isImage && _message.content.trim() !== "") {
-                                        return (
-                                            <div key={key}
-                                                className={`${styles.message} ${_message.username === username ? styles.ownmessage : styles.othermessage}`}>
-
-                                                <div className="inline">
-                                                    <h6>{_message.username}</h6>
-                                                    <small>{formatDate(_message.date)}</small>
-                                                </div>
-                                                <p>{_message.content}</p>
-                                            </div>
-                                        );
-                                    } else if (_message.isImage) {
-                                        return (
-                                            <div key={key}
-                                                className={`${styles.message} ${_message.username === username ? styles.ownmessage : styles.othermessage}`}>
-
-                                                <div className="inline">
-                                                    <h6>{_message.username}</h6>
-                                                    <small>{formatDate(_message.date)}</small>
-                                                </div>
-                                                <div>
-                                                    <img src={_message.content} alt={`Image de ${_message.username}`} />
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                    return null; // Exclure les messages vides
-
-                                }
-                                )
-                                : (
-                                    messages.map((message, key) => {
-                                        if (
-                                            message.content.match(/^(http|https):\/\/.*\.(jpeg|jpg|gif|png|webp|svg)$/) != null
-                                        ) {
-                                            return (
-                                                <div key={key}
-                                                    className={`${styles.message} ${message.username === username ? styles.ownmessage : styles.othermessage}`}>
-
-                                                    <div className="inline">
-                                                        <h6>{message.username}</h6>
-                                                        <small>{formatDate(message.date)}</small>
-                                                    </div>
-                                                    <div>
-                                                        <img src={message.content} alt={`Image de ${message.username}`} />
-                                                    </div>
-                                                </div>
-                                            )
-
-                                        }
-                                        else if (message.content.trim() !== "") {
-                                            return (
-                                                <div key={key}
-                                                    className={`${styles.message} ${message.username === username ? styles.ownmessage : styles.othermessage}`}>
-                                                    <div className="inline">
-                                                        <h6>{message.username}</h6>
-                                                        <small>{formatDate(message.date)}</small>
-                                                    </div>
-                                                    {message.isImage ? (
-                                                        <div>
-                                                            <img src={message.content} alt={`Image de ${message.username}`} />
-                                                        </div>
-                                                    ) : (
-                                                        <p>{message.content}</p>
-                                                    )}
-                                                </div>
-                                            );
-                                        }
-                                        return null; // Exclure les messages vides
-
-                                    })
-                                )}
+                                ? selectedUser.messages.map((_message, key) => (
+                                    <Message
+                                        key={key}
+                                        message={_message}
+                                        isOwnMessage={_message.username === username}
+                                    />
+                                ))
+                                : messages.map((message, key) => (
+                                    <Message
+                                        key={key}
+                                        message={message}
+                                        isOwnMessage={message.username === username}
+                                    />
+                                ))}
                         </>
+
                     )}
                     {error && (
                         <Notification title={error.title} content={error.content} onClose={() => setError(null)} />

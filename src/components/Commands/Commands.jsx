@@ -14,6 +14,39 @@ const Commands = ({ commandsVisible }) => {
     "/skype",
   ];
 
+  // const handleCommandClick = (command) => {
+  //   const sound = sounds[command.substring(1)];
+  //   if (sound) {
+  //     sound.currentTime = 0;
+  //     sound.play();
+  //   }
+  //   socket.on("command", handleCommandClick);
+
+  //   return () => {
+  //     socket.off("command", handleCommandClick);
+  //   };
+
+  //   // Émettez l'événement "command" vers le serveur
+  //   // socket.emit("command", command);
+  // };
+
+
+  const handleCommandClick = (command) => {
+    if (command.startsWith("/")) {
+      command = command.substring(1); // Retirez le préfixe "/" si présent
+    }
+
+    const sound = sounds[command];
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play();
+    }
+    // socket.emit("command", command);
+
+  };
+
+
+
   useEffect(() => {
     setSounds({
       chef: new Audio("/assets/sounds/chef.mp3"),
@@ -62,6 +95,7 @@ const Commands = ({ commandsVisible }) => {
       }
     };
 
+
     socket.on("command", onCommand);
 
     return () => {
@@ -69,15 +103,6 @@ const Commands = ({ commandsVisible }) => {
     };
   }, [sounds]);
 
-
-  const handleCommandClick = (command) => {
-    socket.emit("command", command);
-    const sound = sounds[command.substring(1)];
-    if (sound) {
-      sound.currentTime = 0;
-      sound.play();
-    }
-  };
 
   return (
     <div className={`${styles.commands} ${commandsVisible ? styles.active : styles.inactive}`}>

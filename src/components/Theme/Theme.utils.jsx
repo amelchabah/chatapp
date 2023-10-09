@@ -3,10 +3,8 @@ import styles from "./Theme.module.scss"
 import Script from 'next/script'
 
 export default function SetTheme() {
-
     const [theme, setTheme] = useState()
     const popupRef = useRef(null);
-
     const toggleTheme = () => {
         if (theme == 'light') {
             setTheme('dark')
@@ -30,7 +28,6 @@ export default function SetTheme() {
     }
 
     useEffect(() => {
-
         if (!theme) return setTheme(defaultTheme())
 
         document.querySelector(':root').dataset.theme = (theme)
