@@ -40,6 +40,8 @@
     // margin-bottom: 0.1rem;
     padding-right: 5px;
     height: 100%;
+    // scroll-snap-type: y mandatory;
+    scroll-snap-align: end;  
 }
 
 // .messages img {

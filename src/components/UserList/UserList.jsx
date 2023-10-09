@@ -7,6 +7,9 @@ import { useEffect } from "react";
 
 const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, showGeneralMessages, setShowGeneralMessages }) => {
 
+    const [disconnectionSound, setDisconnectionSound] = useState();
+
+
     const { push } = useRouter();
     const onlineUsers = users.filter((user) => user.connected);
     const otherUsers = onlineUsers.length - 1;
@@ -33,7 +36,16 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
         setShowGeneralMessages(false);
     };
 
-    const HandleLogout = () => {
+    const HandleLogout = (_userID) => {
+        const filteredArray = [...users].filter((_user) =>
+            _user.userID !== _userID ? true : false
+        );
+        console.log(filteredArray);
+        setUsers(filteredArray);
+
+        disconnectionSound.currentTime = 0;
+        disconnectionSound.play();
+
         localStorage.removeItem("sessionID");
         localStorage.removeItem("username");
         localStorage.removeItem("error");
@@ -48,6 +60,9 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
         setUsers(_users);
     };
 
+    useEffect(() => {
+        setDisconnectionSound(new Audio("/assets/sounds/left.mp3"));
+    }, []);
 
 
     return (

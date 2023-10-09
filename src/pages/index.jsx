@@ -5,9 +5,8 @@ import Input from "@/components/Input/Input";
 import { useState } from "react";
 import { useRef } from "react";
 import Notification from "@/components/Notification/Notification";
-import { format, formatDistance } from "date-fns";
 import UserList from "@/components/UserList/UserList";
-import Userbar from "@/components/Userbar/Userbar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import styles from "@/styles/index.module.scss";
 import Message from "@/components/Message/Message"; // Importez le composant Message
 
@@ -18,6 +17,11 @@ const Home = () => {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState();
     const [showGeneralMessages, setShowGeneralMessages] = useState(true);
+    const [connectionSound, setConnectionSound] = useState();
+    const [disconnectionSound, setDisconnectionSound] = useState();
+    // const [userConnected, setUserConnected] = useState("");
+
+
     // const [errors, setErrors] = useState([]);    
     // faire tableau quand y aura plusieurs erreurs, comme pour message
 
@@ -69,6 +73,9 @@ const Home = () => {
             return;
         }
         setUsers((currentUsers) => [...currentUsers, _user]);
+        connectionSound.currentTime = 0;
+        connectionSound.play();
+
     };
 
     const onUserDisconnect = (_userID) => {
@@ -77,6 +84,9 @@ const Home = () => {
         );
         console.log(filteredArray);
         setUsers(filteredArray);
+
+        disconnectionSound.currentTime = 0;
+        disconnectionSound.play();
     };
 
     const onConnectionError = (error) => {
@@ -179,6 +189,8 @@ const Home = () => {
 
 
     useEffect(() => {
+        setConnectionSound(new Audio("/assets/sounds/join.mp3"));
+
         socket.on('private message', onPrivateMessage);
         socket.on('private image', onPrivateImage);
         socket.on('user connected', onUserConnect);
@@ -194,6 +206,8 @@ const Home = () => {
 
     useEffect(() => {
         const sessionID = localStorage.getItem("sessionID");
+        setDisconnectionSound(new Audio("/assets/sounds/left.mp3"));
+
         // s'il est dispo, je me suis déjà connecté et la session existe déjà (le serveur sait que j'existe)
         if (sessionID) {
             socket.auth = { sessionID };
@@ -215,6 +229,9 @@ const Home = () => {
         // socket.on('users', onUserConnect);
         socket.on('disconnect', onConnectionError);
         socket.on('connect_error', onConnectionError);
+        socket.on('connectedUsers', (users) => {
+            setConnectedUsers(users);
+        });
 
         return () => {
             socket.off('error', onError);
@@ -225,7 +242,10 @@ const Home = () => {
             socket.off('users', getUsersAtInit);
             // socket.off('users', onUserConnect);
             socket.off('connect_error', onConnectionError);
+            socket.off('connectedUsers');
             socket.off('disconnect', onConnectionError);
+            socket.off("user connected", onUserConnect);
+            socket.off("user disconnected", onUserDisconnect);
             socket.disconnect();
             // disconnect pour respecter la doc de socket.io
         }
@@ -233,16 +253,12 @@ const Home = () => {
     }, []);
 
 
-    useEffect(() => {
-        // Update the list of connected users when a new user connects or disconnects
-        socket.on('connectedUsers', (users) => {
-            setConnectedUsers(users);
-        });
+    // useEffect(() => {
+    //     // Update the list of connected users when a new user connects or disconnects
 
-        return () => {
-            socket.off('connectedUsers');
-        }
-    }, []);
+    //     return () => {
+    //     }
+    // }, []);
 
 
     const generateAvatar = (username) => {
@@ -339,7 +355,7 @@ const Home = () => {
                 </div>
                 <Input selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
             </div>
-            <Userbar />
+            <Sidebar />
         </>
     );
 }

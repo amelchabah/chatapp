@@ -1,11 +1,7 @@
 import "@/styles/globals.scss";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import Userbar from "@/components/Userbar/Userbar";
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Theme from "@/components/Theme/Theme.utils";
-import UserList from "@/components/UserList/UserList";
-import { useEffect, useState } from "react";
 
 
 export default function App({ Component, pageProps }) {
