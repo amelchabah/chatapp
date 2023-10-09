@@ -437,7 +437,6 @@ const Home = () => {
                         <Notification title={error.title} content={error.content} onClose={() => setError(null)} />
                     )}
                 </div>
-                <Commands />
                 <Input selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
             </div>
             <Userbar />

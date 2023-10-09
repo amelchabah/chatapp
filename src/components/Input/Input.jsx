@@ -1,16 +1,24 @@
 import { socket } from "@/utils/socket";
 import { useRef, useState, useEffect } from "react";
 import styles from "./Input.module.scss";
+import Commands from "@/components/Commands/Commands";
 
 const Input = ({ selectedUser, setSelectedUser, username }) => {
     const inputRef = useRef();
+    const soundBoardRef = useRef();
     const fileInputRef = useRef(); // Référence distincte pour le champ de fichier
     const [imagePreview, setImagePreview] = useState(null);
     const [typingUsers, setTypingUsers] = useState([]);
+    const [commandsVisible, setCommandsVisible] = useState(false);
 
     const customFile = (
         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M448 80c8.8 0 16 7.2 16 16V415.8l-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3V96c0-8.8 7.2-16 16-16H448zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" /></svg>
     );
+
+    const soundBoard = (
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z" /></svg>
+    );
+
 
     const previewImage = (e) => {
         const file = fileInputRef.current.files[0];
@@ -161,6 +169,10 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
         };
     }, []);
 
+    const toggleCommands = () => {
+        setCommandsVisible(!commandsVisible);
+    };
+
     return (
         <>
             <div className={styles.typingIndicator}>
@@ -181,6 +193,9 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                     </div>
                 )}
 
+                {/* <Commands {...{commandsVisible}} /> */}
+                <Commands commandsVisible={commandsVisible} />
+
                 <div className={styles.flex}>
                     <input
                         ref={fileInputRef}
@@ -195,10 +210,13 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                     <label
                         className={styles.customFileInputLabel}
                         htmlFor="fileInput" // Lier le label à l'élément d'entrée de fichier
+                        title="Upload an image"
                     >
                         {customFile}
                     </label>
-
+                    <label ref={soundBoardRef} onClick={toggleCommands} title="Soundboard">
+                        {soundBoard}
+                    </label>
                     <input
                         ref={inputRef}
                         className={styles.inputtext}
@@ -207,7 +225,7 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                         onInput={handleTyping}
                     />
 
-                    <button type="submit">Send</button>
+                    <button type="submit" title="Send">Send</button>
 
                 </div>
 

@@ -12,16 +12,20 @@
     border: 0;
     width: 100%;
     outline: none;
+    margin-left: 0.3rem;
 }
-
 
 .input label {
     display: flex;
-    margin: 0.2rem 0.6rem 0.2rem 0.6rem;
+    margin: 0.1rem;
     cursor: pointer;
 }
 
-.input label svg {
+.input label:first-of-type {
+    margin-left: 0.6rem;
+}
+
+.input label svg, .input svg {
     fill: grey;
 }
 

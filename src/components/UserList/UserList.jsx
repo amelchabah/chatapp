@@ -9,6 +9,10 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
 
     const { push } = useRouter();
     const onlineUsers = users.filter((user) => user.connected);
+    const otherUsers = onlineUsers.length - 1;
+    const LogoutIcon = <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+        <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0-14.3 32-32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c-28.3 0-53 15-72.9 38.9-4.8 4.8-9.1 10.1-13 15.7 21.1 14.9 45.9 24.1 72.9 24.1l64 0c17.7 0-32-14.3-32-32s-14.3-32-32-32z" />
+    </svg>
 
     const generateAvatar = (username) => {
         const initials = username
@@ -45,6 +49,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
     };
 
 
+
     return (
         <div className={styles.userlist}>
             <h3>
@@ -53,26 +58,26 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
                     Messages
                 </span>
             </h3>
-            {/* <div className={`${styles.user}`} onClick={handleGeneralClick}> */}
             <div
-                className={`${styles.user} ${selectedUser ? "" : styles.user__active}`} // Ajoutez la classe user__active si selectedUser est null
+                className={`${styles.user} ${selectedUser ? "" : styles.user__active}`}
+                // Ajouter la classe user__active si selectedUser est null
                 onClick={handleGeneralClick}
-                >
+            >
                 <div className={styles.avatar}>
                     <img src={generateAvatar("General")} alt="your avatar" />
                 </div>
                 <p>General</p></div>
             <hr />
             <nav>
-                <h5>Online - {onlineUsers.length - 1}</h5>
+                <h5>Online - {otherUsers}</h5>
                 <div className={styles.list}>
 
                     {onlineUsers.length === 1 ? (
                         <h5 className={styles.mini}>...y a prsn mskn🧍</h5>
                     ) : (
-
                         users
-                            .filter((user) => user.userID !== socket.userID) // Filtrer votre propre utilisateur
+                            .filter((user) => user.userID !== socket.userID)
+                            // Filtrer son propre utilisateur
                             .map((user) => {
                                 return user.connected ? (
                                     <div
@@ -90,17 +95,10 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
                             }
                             )
                     )}
-
-
-
-
                 </div>
-
             </nav>
             <button onClick={HandleLogout}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0-14.3 32-32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c-28.3 0-53 15-72.9 38.9-4.8 4.8-9.1 10.1-13 15.7 21.1 14.9 45.9 24.1 72.9 24.1l64 0c17.7 0-32-14.3-32-32s-14.3-32-32-32z" />
-                </svg>
+                {LogoutIcon}
                 <p>Logout</p>
             </button>
         </div>
