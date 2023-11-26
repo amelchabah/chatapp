@@ -1,4 +1,4 @@
-<a href="https://chat-amelchabah.vercel.app/">chat-amelchabah.vercel.app</a>, made with Next.js & Socket.io - all rights reserved © amelchabah
+<a href="https://chat-amelchabah.vercel.app/">chat-amelchabah.vercel.app</a>, made with Next.js & Socket.io - all rights reserved © @amelchabah, @karljstn
 
 If you're suddenly disconnected when you send a private image (or anything), just log back in ^^.
 
