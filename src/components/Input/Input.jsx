@@ -19,6 +19,9 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7v72V368c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V147L192 223.8V432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6V200 128c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z" /></svg>
     );
 
+    const deleteIcon = (
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" /></svg>
+    );
 
     const previewImage = (e) => {
         const file = fileInputRef.current.files[0];
@@ -155,6 +158,10 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
 
     };
 
+    const toggleCommands = () => {
+        setCommandsVisible(!commandsVisible);
+    };
+
     useEffect(() => {
         socket.on("user typing", (nickname) => {
             setTypingUsers((prevUsers) => {
@@ -177,15 +184,10 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
         };
     }, []);
 
-    const toggleCommands = () => {
-        setCommandsVisible(!commandsVisible);
-    };
-
 
 
     return (
         <>
-
             <div className={styles.typingIndicator}>
                 {typingUsers.length > 0 && (
                     <h5>
@@ -198,19 +200,12 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                     <div className={styles.imagePreview}>
                         <img src={imagePreview} alt="Image Preview" />
                         <button type="button" className={styles.delete} onClick={onDeleteImage}>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" /></svg>
+                            {deleteIcon}
                         </button>
                     </div>
                 )}
 
-                {/* <Commands {...{commandsVisible}} /> */}
-                {/* <Commands commandsVisible={commandsVisible} /> */}
-
-                {/* {selectedUser ? null : ( */}
                 <Commands commandsVisible={commandsVisible} onCommandClick={onCommandClick} />
-                {/* )} */}
-
-
 
                 <div className={styles.flex}>
                     <input
@@ -218,28 +213,22 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                         className={styles.inputfile}
                         type="file"
                         accept="image/*"
-                        style={{ display: 'none' }} // Masquez l'élément d'entrée de fichier
-                        id="fileInput" // Ajoutez un ID à l'élément d'entrée de fichier
-                        onChange={previewImage} // Listen to file input changes
+                        style={{ display: 'none' }} // masquer l'élément d'entrée de fichier
+                        id="fileInput" // ajouter un ID à l'élément d'entrée de fichier
+                        onChange={previewImage} // listen to file input changes
                     />
 
                     <label
                         className={styles.customFileInputLabel}
-                        htmlFor="fileInput" // Lier le label à l'élément d'entrée de fichier
+                        htmlFor="fileInput" // lier le label à l'élément d'entrée de fichier
                         title="Upload an image"
                     >
                         {customFile}
                     </label>
-                    {/* if i'm on a private conversation, hide this label below */}
-
-                    {/* selectedUser ? null : ( */}
                     <label ref={soundBoardRef} onClick={toggleCommands} title="Soundboard">
                         {soundBoard}
                     </label>
-                    {/* ) */}
-                    {/* <label ref={soundBoardRef} onClick={toggleCommands} title="Soundboard">
-                        {soundBoard}
-                    </label> */}
+                   
                     <input
                         ref={inputRef}
                         className={styles.inputtext}
@@ -249,10 +238,7 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                     />
 
                     <button className={styles.submit} type="submit" title="Send">Send</button>
-
                 </div>
-
-
             </form>
         </>
     );

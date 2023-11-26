@@ -13,15 +13,13 @@ export default function App({ Component, pageProps }) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // loading for 2 seconds when i'm on the login page
         if (isLoginPage) {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
             }, 500);
         }
-    }
-        , [isLoginPage]);
+    }, [isLoginPage]);
 
 
     return (
@@ -52,12 +50,6 @@ export default function App({ Component, pageProps }) {
                 <meta name="twitter:description" content="A chat app built with Socket.io, Next.js, and React." />
             </Head>
             <Theme />
-            {/* <main className={isLoginPage ? 'login' : ''}>
-                <Component {...pageProps} />
-            </main> */}
-
-            {/* add loader */}
-
             {loading ? <Loader /> :
                 <main className={isLoginPage ? 'login' : ''}>
                     <Component {...pageProps} />

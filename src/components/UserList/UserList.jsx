@@ -27,7 +27,7 @@ const UserList = ({ users, setUsers, selectedUser, setSelectedUser, messages, sh
     };
 
     const handleGeneralClick = () => {
-        setSelectedUser(null); // Désélectionnez l'utilisateur sélectionné
+        setSelectedUser(null); // désélectionner l'utilisateur sélectionné
         setShowGeneralMessages(true);
     };
 

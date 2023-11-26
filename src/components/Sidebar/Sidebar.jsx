@@ -16,7 +16,6 @@ const generateAvatar = (name) => {
         .split(' ')
         .map((part) => part[0])
         .join('');
-
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&size=200&bold=true&font-size=0.4&background=d2d3fa&format=svg`;
     // return `https://kawaii-avatar.now.sh/api/avatar?username==${encodeURIComponent(initials)}`
 };
@@ -24,7 +23,6 @@ const generateAvatar = (name) => {
 
 const Sidebar = () => {
     const [connectedUsers, setConnectedUsers] = useState([]);
-    const { push } = useRouter();
     const [windowWidth, setWindowWidth] = useState(0);
     const [username, setUsername] = useState('');
     const today = new Date();
@@ -86,10 +84,11 @@ const Sidebar = () => {
                     <h4>{username}</h4>
                 </div>
             </div>
-            {/* <article>
-                <p>Today is {formattedDate}</p>
-                <h5>More features soon.</h5>
-            </article> */}
+
+            <article>
+                <h5>today is <b>{formattedDate}</b> ⊹˙</h5>
+
+            </article>
             <ul>
                 <li>© Copyrights</li>
                 <li>ui by <a href="https://github.com/amelchabah/" target='_blank' rel="noopener noreferrer">@amelchabah</a></li>
@@ -103,7 +102,6 @@ const Sidebar = () => {
             </ul>
 
             <div className={styles.pull}> ◂ </div>
-            {/* <Theme /> */}
         </div>
     );
 };
