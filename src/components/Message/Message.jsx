@@ -15,12 +15,12 @@ const Message = ({ message, isOwnMessage }) => {
     }
   };
 
-  if (message.content.match(/^(http|https):\/\/.*\.(jpeg|jpg|gif|png|webp|svg)$/) != null) {
+  if (message.content.match(/^(http|https):\/\/.*\.(jpeg|jpg|jfif|gif|png|webp|svg)$/) != null) {
     message.isImage = true;
   }
 
-  // if message is empty, don't display it
-  if (message.content === "") {
+  // if message is empty or starts with / (is a command), don't display it
+  if (message.content === "" || message.content.startsWith("/")) {
     return null;
   }
 
@@ -34,7 +34,7 @@ const Message = ({ message, isOwnMessage }) => {
         <h6>{message.username}</h6>
         <small>{formatDate(message.date)}</small>
       </div>
-      {message.isImage ? (
+      {message.isImage ?  (
         <div>
           <img src={message.content} alt={`Image de ${message.username}`} />
         </div>

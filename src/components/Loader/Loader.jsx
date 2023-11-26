@@ -1,11 +1,15 @@
 import React from 'react';
-import styles from './Loader.module.scss'; // Importez le fichier CSS Loader.css
+import { useState } from 'react';
+import styles from './Loader.module.scss';
 
 const Loader = () => {
   return (
-    <div className={styles.loader}>
-      <div className={styles.loaderspinner}></div>
-    </div>
+    <>
+      <div className={styles.loader}>
+        <div className={styles.loaderspinner}></div>
+      </div>
+    </>
+
   );
 };
 

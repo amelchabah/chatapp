@@ -26,18 +26,18 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const imageBase64 = event.target.result;
-                setImagePreview(imageBase64); // Set the image preview
+                setImagePreview(imageBase64);
             };
             reader.readAsDataURL(file);
         };
     };
+
     const onImageUpload = (e) => {
         const file = fileInputRef.current.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const imageBase64 = event.target.result;
-                // setImagePreview(imageBase64); // Set the image preview
                 socket.emit("image", { content: imageBase64, fileName: file.name });
             };
             reader.readAsDataURL(file);
@@ -51,7 +51,6 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const imageBase64 = event.target.result;
-                // setImagePreview(imageBase64); // Set the image preview
                 socket.emit("private image", { content: imageBase64, fileName: file.name, to: selectedUser.userID });
             };
             reader.readAsDataURL(file);
@@ -79,6 +78,8 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
         fileInputRef.current.value = "";
         setImagePreview(null);
     };
+
+
 
 
     const onSend = (e) => {
@@ -130,6 +131,19 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
         setImagePreview(null);
     };
 
+    const onCommandClick = (command) => {
+        if (!selectedUser) {
+            socket.emit('message', {
+                content: command
+            });
+        } else {
+            socket.emit("private message", {
+                content: command,
+                to: selectedUser.userID
+            });
+
+        }
+    };
 
     const handleTyping = () => {
         const username = localStorage.getItem("username");
@@ -167,15 +181,17 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
         setCommandsVisible(!commandsVisible);
     };
 
+
+
     return (
         <>
+
             <div className={styles.typingIndicator}>
                 {typingUsers.length > 0 && (
                     <h5>
                         {typingUsers.join(", ")} {typingUsers.length === 1 ? "is" : "are"} typing...
                     </h5>
                 )}
-
             </div>
             <form action="" onSubmit={onSend} className={styles.input}>
                 {imagePreview && (
@@ -188,7 +204,13 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                 )}
 
                 {/* <Commands {...{commandsVisible}} /> */}
-                <Commands commandsVisible={commandsVisible} />
+                {/* <Commands commandsVisible={commandsVisible} /> */}
+
+                {/* {selectedUser ? null : ( */}
+                <Commands commandsVisible={commandsVisible} onCommandClick={onCommandClick} />
+                {/* )} */}
+
+
 
                 <div className={styles.flex}>
                     <input
@@ -208,9 +230,16 @@ const Input = ({ selectedUser, setSelectedUser, username }) => {
                     >
                         {customFile}
                     </label>
+                    {/* if i'm on a private conversation, hide this label below */}
+
+                    {/* selectedUser ? null : ( */}
                     <label ref={soundBoardRef} onClick={toggleCommands} title="Soundboard">
                         {soundBoard}
                     </label>
+                    {/* ) */}
+                    {/* <label ref={soundBoardRef} onClick={toggleCommands} title="Soundboard">
+                        {soundBoard}
+                    </label> */}
                     <input
                         ref={inputRef}
                         className={styles.inputtext}

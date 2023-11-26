@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 // export const socket = io("https://iut-chat.karljustiniano.fr:1234/", {
 // export const socket = io("http://localhost:8100", {
 export const socket = io("https://mmidev.alwaysdata.net/", {
-    autoConnect: false,
+//     autoConnect: false,
 });
 
 

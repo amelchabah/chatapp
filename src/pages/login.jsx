@@ -6,8 +6,6 @@ import { useRouter } from "next/router";
 import { socket } from "@/utils/socket";
 import { el } from "date-fns/locale";
 import styles from "@/styles/login.module.scss";
-// import Theme from "@/components/Theme/Theme.utils";
-
 
 const Login = () => {
     // recuperer valeur du input
@@ -58,13 +56,6 @@ const Login = () => {
         }
     }, []);
 
-    // const displayError = () => {
-    //     if (error !== "") {
-    //         console.log('error');
-    //         return <p className="error">{error}</p>
-    //     }
-    // }
-
     const getClassname = () => {
         if (error !== "") {
             return `${styles.login_frame} ${styles.error}`
@@ -79,7 +70,6 @@ const Login = () => {
                 <img src="/assets/images/cats.jpg" width={200} height={200} alt="login image" />
                 {/* <form action="" onSubmit={(e) => e.preventDefault()}> */}
                 <div>
-                    {/* </form> */}
                     {error !== "" ? <>
                         <p className="error">{error}</p>
                     </> : <>
@@ -102,9 +92,6 @@ const Login = () => {
                 </div>
 
             </div>
-
-            {/* <Theme /> */}
-
         </>
     )
 }

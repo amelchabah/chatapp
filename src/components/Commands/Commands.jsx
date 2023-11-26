@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { socket } from "@/utils/socket";
 import styles from "./Commands.module.scss";
 
-const Commands = ({ commandsVisible }) => {
+const Commands = ({ commandsVisible, onCommandClick }) => {
   const [sounds, setSounds] = useState({});
   const commandList = [
     "/chef",
@@ -13,39 +13,6 @@ const Commands = ({ commandsVisible }) => {
     "/peter",
     "/skype",
   ];
-
-  // const handleCommandClick = (command) => {
-  //   const sound = sounds[command.substring(1)];
-  //   if (sound) {
-  //     sound.currentTime = 0;
-  //     sound.play();
-  //   }
-  //   socket.on("command", handleCommandClick);
-
-  //   return () => {
-  //     socket.off("command", handleCommandClick);
-  //   };
-
-  //   // Émettez l'événement "command" vers le serveur
-  //   // socket.emit("command", command);
-  // };
-
-
-  const handleCommandClick = (command) => {
-    if (command.startsWith("/")) {
-      command = command.substring(1); // Retirez le préfixe "/" si présent
-    }
-
-    const sound = sounds[command];
-    if (sound) {
-      sound.currentTime = 0;
-      sound.play();
-    }
-    // socket.emit("command", command);
-
-  };
-
-
 
   useEffect(() => {
     setSounds({
@@ -95,14 +62,19 @@ const Commands = ({ commandsVisible }) => {
       }
     };
 
-
     socket.on("command", onCommand);
-
     return () => {
       socket.off("command", onCommand);
     };
   }, [sounds]);
 
+  const handleCommandClick = (command) => {
+    socket.emit("command", command);
+      if (onCommandClick) {
+      onCommandClick(command);
+    }
+  };
+  
 
   return (
     <div className={`${styles.commands} ${commandsVisible ? styles.active : styles.inactive}`}>
@@ -119,3 +91,6 @@ const Commands = ({ commandsVisible }) => {
 };
 
 export default Commands;
+
+
+

@@ -13,15 +13,11 @@ import Message from "@/components/Message/Message"; // Importez le composant Mes
 const Home = () => {
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState();
-    // users inscrits (connectés ou non)
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState();
     const [showGeneralMessages, setShowGeneralMessages] = useState(true);
     const [connectionSound, setConnectionSound] = useState();
     const [disconnectionSound, setDisconnectionSound] = useState();
-    // const [userConnected, setUserConnected] = useState("");
-
-
     // const [errors, setErrors] = useState([]);    
     // faire tableau quand y aura plusieurs erreurs, comme pour message
 
@@ -252,15 +248,6 @@ const Home = () => {
 
     }, []);
 
-
-    // useEffect(() => {
-    //     // Update the list of connected users when a new user connects or disconnects
-
-    //     return () => {
-    //     }
-    // }, []);
-
-
     const generateAvatar = (username) => {
         const initials = username
             .split(' ')
@@ -270,13 +257,12 @@ const Home = () => {
         return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&size=200&bold=true&font-size=0.4&background=d2d3fa&format=svg`;
     };
 
-
     // Faites défiler la liste vers le bas lorsque la page se charge
     useEffect(() => {
         if (listRef.current) {
             listRef.current.scrollTop = listRef.current.scrollHeight;
         }
-    }, [messages, selectedUser, users, error, listRef.current, messages.isImage]);
+    }, [messages, selectedUser, users, error, listRef.current, messages.isImage, messages.content]);
 
     return (
         <>

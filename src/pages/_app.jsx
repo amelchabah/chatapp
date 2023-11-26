@@ -1,12 +1,28 @@
 import "@/styles/globals.scss";
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Theme from "@/components/Theme/Theme.utils";
+import Loader from "@/components/Loader/Loader";
 
 
 export default function App({ Component, pageProps }) {
     const router = useRouter();
     const isLoginPage = router.pathname === '/login';
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        // loading for 2 seconds when i'm on the login page
+        if (isLoginPage) {
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
+        }
+    }
+        , [isLoginPage]);
+
 
     return (
         <>
@@ -17,7 +33,7 @@ export default function App({ Component, pageProps }) {
                 <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
                 <link rel="manifest" href="favicon/site.webmanifest" />
-                
+
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="mobile-web-app-capable" content="yes" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,9 +52,17 @@ export default function App({ Component, pageProps }) {
                 <meta name="twitter:description" content="A chat app built with Socket.io, Next.js, and React." />
             </Head>
             <Theme />
-            <main className={isLoginPage ? 'login' : ''}>
+            {/* <main className={isLoginPage ? 'login' : ''}>
                 <Component {...pageProps} />
-            </main>
+            </main> */}
+
+            {/* add loader */}
+
+            {loading ? <Loader /> :
+                <main className={isLoginPage ? 'login' : ''}>
+                    <Component {...pageProps} />
+                </main>
+            }
 
         </>
     );
