@@ -1,6 +1,7 @@
-<a href="https://chat-amelchabah.vercel.app/">chat-amelchabah.vercel.app</a>, made with Next.js & Socket.io
+<a href="https://chat-amelchabah.vercel.app/">chat-amelchabah.vercel.app</a>, made with Next.js & Socket.io - all rights reserved © amelchabah
 
-all rights reserved © amelchabah
+If you're suddenly disconnected when you send a private image (or anything), just log back in.
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
